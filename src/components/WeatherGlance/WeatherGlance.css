@@ -1,0 +1,70 @@
+.weatherInfoWrapper {
+  height: 70vh;
+  background-repeat: no-repeat;
+  background-size: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+}
+
+.cityName {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 41px;
+  letter-spacing: 0.374px;
+  color: #2c013d;
+  text-align: center;
+}
+
+.temperatureMain {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 200;
+  font-size: 96px;
+  line-height: 70px;
+  letter-spacing: 0.374px;
+  color: #2c013d;
+  text-align: center;
+}
+
+.weatherStatsWrapper{
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    
+}
+
+.weatherOverview {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.38px;
+  color: rgba(63, 11, 63, 0.6);
+  text-align: center;
+}
+
+.temperatureHighLow{
+    font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.38px;
+  color: #2c013d;
+  text-align: center;
+}
+
+.houseLogo {
+  height: 450px;
+}

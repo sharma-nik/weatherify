@@ -1,0 +1,55 @@
+.headerWrapper {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 0px 0px 30px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLogo {
+  height: 60px;
+  margin-left: 10px;
+}
+
+.headerSearchInput {
+  background: linear-gradient(144.91deg, #f5f5f9 18.06%, #dadfe7 85.87%);
+  border-radius: 10px;
+  height: 36px;
+  width: 300px;
+  margin-right: 10px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+.headerSearchInput input {
+  background: linear-gradient(144.91deg, #f5f5f9 18.06%, #dadfe7 85.87%);
+  color: #2c013d;
+}
+
+.headerSearchWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.headerSearchButton {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f5f5f9;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.headerSearchButton :hover {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f5f5f9;
+}
