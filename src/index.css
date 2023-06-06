@@ -1,7 +1,12 @@
 * {
   box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
 }
 
 body {
-  background: radial-gradient(95.47% 71.89% at 93.07% 74.31%, #45278B 0%, #2E335A 100%);
+  background-image: url('./assets/purple.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
