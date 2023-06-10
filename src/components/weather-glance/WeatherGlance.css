@@ -1,11 +1,10 @@
 .weatherInfoWrapper {
-  height: 70vh;
   background-repeat: no-repeat;
   background-size: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 50px;
+  padding: 100px 50px 20px 50px;
 }
 
 .cityName {
