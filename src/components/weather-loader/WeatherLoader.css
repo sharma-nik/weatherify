@@ -1,0 +1,23 @@
+.loading {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingHeader {
+  font-size: 50px;
+  font-weight: 800;
+  color: #2c013d;
+}
+
+.loadingWrapper {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 40px;
+  letter-spacing: 0.38px;
+  color: #fff;
+  width: 500px;
+}

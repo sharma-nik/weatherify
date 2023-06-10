@@ -1,0 +1,49 @@
+.overlayNotch {
+  width: 50px;
+  height: 5px;
+  background: #ecbefd;
+  border-radius: 10px;
+  margin: 10px auto 30px auto;
+}
+
+.weatherCardWrapper {
+  background: rgba(110, 49, 157, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  height: 164px;
+  width: 164px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0px 10px 0px 10px;
+}
+
+.weatherCardTitle {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  color: #dcdbdc;
+  text-transform: uppercase;
+}
+
+.weatherCardSubTitle {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  color: #f3d3ff;
+}
+
+.weatherCardFooter {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: #ecbefd;
+}
