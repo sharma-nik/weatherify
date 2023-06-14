@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import weatherifyLogo from "../../assets/weatherify-logo.png";
 import locationLogo from "../../assets/location.png";
 import { SearchOutlined } from "@ant-design/icons";
@@ -8,7 +8,8 @@ import TransparentCard from "../../common/transparent-card/TransparentCard";
 
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ getWeatherData }) => {
+  const [cityName, setCityName] = useState("");
   return (
     <TransparentCard type="header">
       <div className="cardWrapperPositioning">
@@ -16,6 +17,9 @@ const Header = () => {
         <div className="headerSearchWrapper">
           <Input
             className="headerSearchInput"
+            value={cityName}
+            onChange={(e) => setCityName(e.target.value)}
+            placeholder="Your city name"
             prefix={
               <img
                 src={locationLogo}
@@ -27,6 +31,7 @@ const Header = () => {
             className="headerSearchButton"
             type="primary"
             icon={<SearchOutlined />}
+            onClick={() => getWeatherData(cityName)}
           >
             Search
           </Button>
