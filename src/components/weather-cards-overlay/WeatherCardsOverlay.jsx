@@ -6,7 +6,9 @@ import { UserContext } from "../../App";
 import "./WeatherCardsOverlay.css";
 
 const WeatherCardsOverlay = () => {
-  const { main, sys: sunTime, visibility, wind } = useContext(UserContext);
+  const { current } = useContext(UserContext);
+  const sunrise = new Date(current.sunrise * 1000);
+  const sunset = new Date(current.sunset * 1000);
   return (
     <TransparentCard type="overlay">
       <div className="overlayNotch"></div>
@@ -15,7 +17,7 @@ const WeatherCardsOverlay = () => {
           <div>
             <div className="weatherCardTitle">Feels Like</div>
             <div className="weatherCardSubTitle">
-              {Math.round(main.feels_like, 2) - 273}°
+              {Math.round(current.feels_like, 2)}°
             </div>
           </div>
           <div className="weatherCardFooter">
@@ -25,30 +27,43 @@ const WeatherCardsOverlay = () => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Humidity</div>
-            <div className="weatherCardSubTitle">{main.humidity}%</div>
-            <Slider value={main.humidity} disabled={true} />
+            <div className="weatherCardSubTitle">{current.humidity}%</div>
+            <Slider value={current.humidity} disabled={true} />
           </div>
           <div className="weatherCardFooter">Quite humid</div>
         </div>
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Sunrise</div>
-            <div className="weatherCardSubTitle">5:28 AM</div>
+            <div className="weatherCardSubTitle">
+              {sunrise.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </div>
           </div>
           <img src={sunCurveLogo} />
-          <div className="weatherCardFooter">Sunset: 7:25 PM</div>
+          <div className="weatherCardFooter">
+            Sunset:{" "}
+            {sunset.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
         </div>
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Visibility</div>
-            <div className="weatherCardSubTitle">{visibility / 1000} km</div>
+            <div className="weatherCardSubTitle">
+              {current.visibility / 1000} km
+            </div>
           </div>
           <div className="weatherCardFooter">Fair distance</div>
         </div>
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Wind</div>
-            <div className="weatherCardSubTitle">{wind.speed} km/h</div>
+            <div className="weatherCardSubTitle">{current.wind_speed} km/h</div>
           </div>
           <div className="weatherCardFooter">Pleasant day</div>
         </div>
@@ -56,7 +71,7 @@ const WeatherCardsOverlay = () => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Pressure</div>
-            <div className="weatherCardSubTitle">{main.pressure}</div>
+            <div className="weatherCardSubTitle">{current.pressure}</div>
           </div>
           <div className="weatherCardFooter">Fair distance</div>
         </div>
