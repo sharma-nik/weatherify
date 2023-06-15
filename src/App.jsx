@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import "./App.css";
-import { getCityWeatherData } from "./api/api";
+import { getGeoCoordinates, getWeeklyWeatherData } from "./api/api";
 import { useMutation, useQuery } from "react-query";
 import Header from "./components/Header/Header";
 import WeatherGlance from "./components/weather-glance/WeatherGlance";
@@ -13,16 +13,34 @@ const lon = "77.2090";
 export const UserContext = createContext();
 
 function App() {
-  const { mutate, data, isLoading } = useMutation((city) =>
-    getCityWeatherData(city).then((response) => response.data)
+  const [weatherData, setWeatherData] = useState(null);
+  const [cityName, setCityName] = useState(null);
+  const { mutate, data, isLoading } = useMutation(
+    async (city) => {
+      setWeatherData(null);
+      const response = await getGeoCoordinates(city);
+      setCityName(response.data[0].name);
+      return response.data[0];
+    },
+    {
+      onSuccess: async (data) => {
+        const weatherData = await getWeeklyWeatherData(data.lat, data.lon);
+        console.log(weatherData);
+        setWeatherData(weatherData.data);
+      },
+    }
   );
 
   return (
     <>
-      <UserContext.Provider value={data}>
+      <UserContext.Provider value={weatherData}>
         <Header getWeatherData={mutate} />
-        {data ? <WeatherGlance /> : <WeatherLoader isLoading={isLoading} />}
-        {data ? <WeatherCardsOverlay /> : ""}
+        {weatherData ? (
+          <WeatherGlance cityName={cityName} />
+        ) : (
+          <WeatherLoader isLoading={isLoading} />
+        )}
+        {weatherData ? <WeatherCardsOverlay /> : ""}
       </UserContext.Provider>
     </>
   );

@@ -6,8 +6,8 @@ import { DAY_WISE_WEATHER } from "../../constants/data";
 import { UserContext } from "../../App";
 import "./WeatherGlance.css";
 
-const WeatherGlance = ({ data }) => {
-  const { main, weather, name } = useContext(UserContext);
+const WeatherGlance = ({ cityName }) => {
+  const { current, daily } = useContext(UserContext);
   return (
     <div className="weatherInfoWrapper">
       <div className="weatherStatsWrapper">
@@ -23,12 +23,12 @@ const WeatherGlance = ({ data }) => {
             <img src={showersLogo} alt="House logo" />
           </div>
           <div>
-            <p className="cityName">{name}</p>
-            <p className="temperatureMain">{Math.round(main.temp, 2) - 273}°</p>
-            <p className="weatherOverview">{weather[0].main}</p>
+            <p className="cityName">{cityName}</p>
+            <p className="temperatureMain">{Math.round(current.temp, 2)}°c</p>
+            <p className="weatherOverview">{current.weather[0].main}</p>
             <p className="temperatureHighLow">
-              H: {Math.round(main.temp_max, 2) - 273}° | L:{" "}
-              {Math.round(main.temp_min, 2) - 273}°
+              H: {Math.round(daily[0].temp.max, 2)}° | L:{" "}
+              {Math.round(daily[0].temp.min, 2)}°
             </p>
           </div>
         </div>

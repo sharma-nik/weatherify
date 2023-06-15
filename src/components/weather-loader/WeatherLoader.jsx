@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import houseLogo from "../../assets/3d-house.svg";
 import "./WeatherLoader.css";
 import { Spin } from "antd";
