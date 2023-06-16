@@ -11,11 +11,13 @@ const lat = "28.6139";
 const lon = "77.2090";
 
 export const UserContext = createContext();
+export const WeeklyIndexContext = createContext();
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [cityName, setCityName] = useState(null);
-  const { mutate, data, isLoading } = useMutation(
+  const [weeklyDataIndex, setWeeklyDataIndex] = useState(0);
+  const { mutate, isLoading } = useMutation(
     async (city) => {
       setWeatherData(null);
       const response = await getGeoCoordinates(city);
@@ -25,7 +27,6 @@ function App() {
     {
       onSuccess: async (data) => {
         const weatherData = await getWeeklyWeatherData(data.lat, data.lon);
-        console.log(weatherData);
         setWeatherData(weatherData.data);
       },
     }
@@ -33,15 +34,19 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={weatherData}>
-        <Header getWeatherData={mutate} />
-        {weatherData ? (
-          <WeatherGlance cityName={cityName} />
-        ) : (
-          <WeatherLoader isLoading={isLoading} />
-        )}
-        {weatherData ? <WeatherCardsOverlay /> : ""}
-      </UserContext.Provider>
+      <WeeklyIndexContext.Provider
+        value={{ weeklyDataIndex, setWeeklyDataIndex }}
+      >
+        <UserContext.Provider value={weatherData}>
+          <Header getWeatherData={mutate} />
+          {weatherData ? (
+            <WeatherGlance cityName={cityName} />
+          ) : (
+            <WeatherLoader isLoading={isLoading} />
+          )}
+          {weatherData ? <WeatherCardsOverlay /> : ""}
+        </UserContext.Provider>
+      </WeeklyIndexContext.Provider>
     </>
   );
 }

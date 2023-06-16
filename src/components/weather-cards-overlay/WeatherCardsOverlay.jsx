@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import TransparentCard from "../../common/transparent-card/TransparentCard";
 import sunCurveLogo from "../../assets/sun-curve.png";
 import { Slider } from "antd";
-import { UserContext } from "../../App";
+import { UserContext, WeeklyIndexContext } from "../../App";
 import "./WeatherCardsOverlay.css";
 
 const WeatherCardsOverlay = () => {
-  const { current } = useContext(UserContext);
-  const sunrise = new Date(current.sunrise * 1000);
-  const sunset = new Date(current.sunset * 1000);
+  const { daily } = useContext(UserContext);
+  const { weeklyDataIndex } = useContext(WeeklyIndexContext);
+  const sunrise = new Date(daily[weeklyDataIndex].sunrise * 1000);
+  const sunset = new Date(daily[weeklyDataIndex].sunset * 1000);
   return (
     <TransparentCard type="overlay">
       <div className="overlayNotch"></div>
@@ -17,7 +18,7 @@ const WeatherCardsOverlay = () => {
           <div>
             <div className="weatherCardTitle">Feels Like</div>
             <div className="weatherCardSubTitle">
-              {Math.round(current.feels_like, 2)}°
+              {Math.round(daily[weeklyDataIndex].feels_like.day, 2)}°
             </div>
           </div>
           <div className="weatherCardFooter">
@@ -27,8 +28,10 @@ const WeatherCardsOverlay = () => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Humidity</div>
-            <div className="weatherCardSubTitle">{current.humidity}%</div>
-            <Slider value={current.humidity} disabled={true} />
+            <div className="weatherCardSubTitle">
+              {daily[weeklyDataIndex].humidity}%
+            </div>
+            <Slider value={daily[weeklyDataIndex].humidity} disabled={true} />
           </div>
           <div className="weatherCardFooter">Quite humid</div>
         </div>
@@ -53,9 +56,9 @@ const WeatherCardsOverlay = () => {
         </div>
         <div className="weatherCardWrapper">
           <div>
-            <div className="weatherCardTitle">Visibility</div>
+            <div className="weatherCardTitle">UV Index</div>
             <div className="weatherCardSubTitle">
-              {current.visibility / 1000} km
+              {daily[weeklyDataIndex].uvi}
             </div>
           </div>
           <div className="weatherCardFooter">Fair distance</div>
@@ -63,7 +66,9 @@ const WeatherCardsOverlay = () => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Wind</div>
-            <div className="weatherCardSubTitle">{current.wind_speed} km/h</div>
+            <div className="weatherCardSubTitle">
+              {daily[weeklyDataIndex].wind_speed} km/h
+            </div>
           </div>
           <div className="weatherCardFooter">Pleasant day</div>
         </div>
@@ -71,7 +76,9 @@ const WeatherCardsOverlay = () => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Pressure</div>
-            <div className="weatherCardSubTitle">{current.pressure}</div>
+            <div className="weatherCardSubTitle">
+              {daily[weeklyDataIndex].pressure}
+            </div>
           </div>
           <div className="weatherCardFooter">Fair distance</div>
         </div>
