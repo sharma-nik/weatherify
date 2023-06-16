@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import houseLogo from "../../assets/3d-house.svg";
-import showersLogo from "../../assets/showers.png";
+import showersLogo from "../../assets/rainy.png";
 import WeatherTile from "../../common/weather-tile/WeatherTile.jsx";
-import { DAY_WISE_WEATHER } from "../../constants/data";
-import { UserContext } from "../../App";
+import { UserContext, WeeklyIndexContext } from "../../App";
 import "./WeatherGlance.css";
+import { getWeatherIcon } from "../../constants/utils";
 
 const WeatherGlance = ({ cityName }) => {
-  const { current, daily } = useContext(UserContext);
+  const { daily } = useContext(UserContext);
+  const { weeklyDataIndex } = useContext(WeeklyIndexContext);
+  let day = new Date(daily[weeklyDataIndex].dt * 1000);
+  day = day.toDateString().split(" ")[0];
   return (
     <div className="weatherInfoWrapper">
       <div className="weatherStatsWrapper">
@@ -20,16 +23,53 @@ const WeatherGlance = ({ cityName }) => {
           }}
         >
           <div className="weatherIcon">
-            <img src={showersLogo} alt="House logo" />
+            <img
+              src={
+                getWeatherIcon(daily[weeklyDataIndex].weather[0].main)
+                  ? getWeatherIcon(daily[weeklyDataIndex].weather[0].main)
+                  : showersLogo
+              }
+              alt="House logo"
+            />
           </div>
-          <div>
+          <div style={{ width: "100%" }}>
             <p className="cityName">{cityName}</p>
-            <p className="temperatureMain">{Math.round(current.temp, 2)}°c</p>
-            <p className="weatherOverview">{current.weather[0].main}</p>
-            <p className="temperatureHighLow">
-              H: {Math.round(daily[0].temp.max, 2)}° | L:{" "}
-              {Math.round(daily[0].temp.min, 2)}°
+            <p className="temperatureMain">
+              {Math.round(daily[weeklyDataIndex].temp.day, 2)}°c
             </p>
+            <div style={{ display: "flex" }}>
+              <div
+                className="miniTemp"
+                style={{
+                  paddingRight: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  width: "50%",
+                }}
+              >
+                {day}
+              </div>
+              <div
+                style={{
+                  borderLeft: "1px solid rgba(255, 255, 255, 0.40)",
+                  paddingLeft: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "50%",
+                }}
+              >
+                <p className="weatherOverview">
+                  {daily[weeklyDataIndex].weather[0].main}
+                </p>
+                <p className="temperatureHighLow">
+                  H: {Math.round(daily[weeklyDataIndex].temp.max, 2)}° | L:{" "}
+                  {Math.round(daily[weeklyDataIndex].temp.min, 2)}°
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -39,14 +79,19 @@ const WeatherGlance = ({ cityName }) => {
             paddingTop: "10px",
           }}
         >
-          {DAY_WISE_WEATHER.map((data) => {
-            return (
-              <WeatherTile
-                day={data.day}
-                weather={data.weather}
-                temp={data.temp}
-              />
-            );
+          {daily.map((data, index) => {
+            if (index > 0) {
+              let day = new Date(data.dt * 1000);
+              day = day.toDateString().split(" ")[0];
+              return (
+                <WeatherTile
+                  index={index}
+                  day={day}
+                  temp={data.temp.day}
+                  weather={data.weather[0].main}
+                />
+              );
+            } else return;
           })}
         </div>
       </div>
