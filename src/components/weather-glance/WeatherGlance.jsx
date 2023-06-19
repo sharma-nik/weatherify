@@ -9,8 +9,11 @@ import { getWeatherIcon } from "../../constants/utils";
 const WeatherGlance = ({ cityName }) => {
   const { daily } = useContext(UserContext);
   const { weeklyDataIndex } = useContext(WeeklyIndexContext);
+  let date = new Date(daily[weeklyDataIndex].dt * 1000);
   let day = new Date(daily[weeklyDataIndex].dt * 1000);
+  date = date.toDateString().split(" ").slice(1, 4).join(" ");
   day = day.toDateString().split(" ")[0];
+
   return (
     <div className="weatherInfoWrapper">
       <div className="weatherStatsWrapper">
@@ -38,29 +41,11 @@ const WeatherGlance = ({ cityName }) => {
               {Math.round(daily[weeklyDataIndex].temp.day, 2)}°c
             </p>
             <div style={{ display: "flex" }}>
-              <div
-                className="miniTemp"
-                style={{
-                  paddingRight: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  width: "50%",
-                }}
-              >
-                {day}
+              <div className="miniTemp dateWrapper">
+                <div className="weatherOverview">{day}</div>
+                <div className="temperatureHighLow">{date}</div>
               </div>
-              <div
-                style={{
-                  borderLeft: "1px solid rgba(255, 255, 255, 0.40)",
-                  paddingLeft: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  width: "50%",
-                }}
-              >
+              <div style={{}} className="weatherWrapper">
                 <p className="weatherOverview">
                   {daily[weeklyDataIndex].weather[0].main}
                 </p>
