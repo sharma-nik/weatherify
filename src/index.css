@@ -5,8 +5,30 @@
 }
 
 body {
-  background-image: url('./assets/purple.jpeg');
+  background-image: url("./assets/purple.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(72, 32, 103, 0.2);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(110, 49, 157, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(157, 72, 223, 0.2);
 }
