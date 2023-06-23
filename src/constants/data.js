@@ -20,3 +20,11 @@ export const WEATHER_TYPE = [
   { weatherType: "Rain", weatherIcon: rainIcon },
   { weatherType: "Drizzle", weatherIcon: drizzleIcon },
 ];
+
+export const POLLUTION_PROMPT = [
+  { pollutionLevel: "1", pollutionText: "Good" },
+  { pollutionLevel: "2", pollutionText: "Fair" },
+  { pollutionLevel: "3", pollutionText: "Moderate" },
+  { pollutionLevel: "4", pollutionText: "Poor" },
+  { pollutionLevel: "5", pollutionText: "Very Poor" },
+];

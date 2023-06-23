@@ -50,7 +50,7 @@
 
 .mapsWrapper {
   border-radius: 10px;
-  height: fit-content;
+  max-height: 480px;
   padding: 20px;
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -62,8 +62,16 @@
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  max-height: 600px;
+  max-height: 500px;
   width: 40%;
+}
+
+.airQualityWrapper {
+  padding: 20px;
+  background: rgba(110, 49, 157, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  height: 400px;
 }
 
 .mapboxgl-canvas {
@@ -74,7 +82,7 @@
   display: none;
 }
 
-.mapboxgl-children {
+.mapboxgl-control-container + div {
   display: none;
 }
 

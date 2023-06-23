@@ -14,6 +14,10 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
     "antd": "^5.5.2",
     "axios": "^1.4.0",
     "mapbox-gl": "^2.15.0",
@@ -22,7 +26,8 @@
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.25",
     "react-query": "^3.39.3",
-    "react-router": "^6.11.2"
+    "react-router": "^6.11.2",
+    "recharts": "^2.7.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
