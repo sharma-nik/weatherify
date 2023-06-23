@@ -4,6 +4,7 @@ import {
   getGeoCoordinates,
   getWeeklyWeatherData,
   getCityName,
+  getPollutionData,
 } from "./api/api";
 import { useMutation } from "react-query";
 import Header from "./components/Header/Header";
@@ -13,9 +14,11 @@ import WeatherLoader from "./components/weather-loader/WeatherLoader";
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();
+export const PollutionContext = createContext();
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
+  const [pollutionData, setPollutionData] = useState(null);
   const [cityName, setCityName] = useState(null);
   const [countryName, setCountryName] = useState(null);
   const [weeklyDataIndex, setWeeklyDataIndex] = useState(0);
@@ -35,6 +38,8 @@ function App() {
         const weatherData = await getWeeklyWeatherData(data.lat, data.lon);
         setCoordinates([data.lat, data.lon]);
         setWeatherData(weatherData.data);
+        const pollutionData = await getPollutionData(data.lat, data.lon);
+        setPollutionData(pollutionData.data.list[0]);
       },
     }
   );
@@ -58,31 +63,40 @@ function App() {
           setWeatherData(data);
         })
         .catch(() => setIsDataFetching(false));
+
+      getPollutionData(
+        position.coords.latitude,
+        position.coords.longitude
+      ).then(({ data }) => {
+        setPollutionData(data.list[0]);
+      });
     });
   }, []);
 
   return (
     <>
-      <WeeklyIndexContext.Provider
-        value={{ weeklyDataIndex, setWeeklyDataIndex }}
-      >
-        <UserContext.Provider value={weatherData}>
-          <Header getWeatherData={mutate} />
-          {weatherData ? (
-            <WeatherGlance cityName={cityName} />
-          ) : (
-            <WeatherLoader isLoading={isDataFetching} />
-          )}
-          {weatherData ? (
-            <WeatherCardsOverlay
-              countryName={countryName}
-              coordinates={coordinates}
-            />
-          ) : (
-            ""
-          )}
-        </UserContext.Provider>
-      </WeeklyIndexContext.Provider>
+      <PollutionContext.Provider value={pollutionData}>
+        <WeeklyIndexContext.Provider
+          value={{ weeklyDataIndex, setWeeklyDataIndex }}
+        >
+          <UserContext.Provider value={weatherData}>
+            <Header getWeatherData={mutate} />
+            {weatherData ? (
+              <WeatherGlance cityName={cityName} coordinates={coordinates} />
+            ) : (
+              <WeatherLoader isLoading={isDataFetching} />
+            )}
+            {weatherData ? (
+              <WeatherCardsOverlay
+                countryName={countryName}
+                coordinates={coordinates}
+              />
+            ) : (
+              ""
+            )}
+          </UserContext.Provider>
+        </WeeklyIndexContext.Provider>
+      </PollutionContext.Provider>
     </>
   );
 }

@@ -35,3 +35,10 @@ export function getCountryNews(country) {
     url: `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${"0fc289c076cf441d91ee4ddff8042fee"}`,
   });
 }
+
+export function getPollutionData(lat, lon) {
+  return axios({
+    method: "get",
+    url: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+  });
+}
