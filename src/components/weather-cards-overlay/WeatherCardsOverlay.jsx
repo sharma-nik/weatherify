@@ -7,21 +7,8 @@ import { PollutionContext, UserContext, WeeklyIndexContext } from "../../App";
 import { Map } from "react-map-gl";
 import { getCountryNews } from "../../api/api";
 import "./WeatherCardsOverlay.css";
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  Legend,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-  RadialBarChart,
-  RadialBar,
-} from "recharts";
-import {
-  getComponentConcentration,
-  getWeatherText,
-} from "../../constants/utils";
+import { getComponentConcentration } from "../../constants/utils";
+import Footer from "../footer/Footer";
 
 const style = {
   top: "50%",
@@ -86,6 +73,16 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
           </div>
           <div className="weatherCardFooter">Quite humid</div>
         </div>
+
+        <div className="weatherCardWrapper">
+          <div>
+            <div className="weatherCardTitle">UV Index</div>
+            <div className="weatherCardSubTitle">
+              {daily[weeklyDataIndex].uvi}
+            </div>
+          </div>
+          <div className="weatherCardFooter">Fair distance</div>
+        </div>
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">Sunrise</div>
@@ -104,15 +101,6 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
               minute: "2-digit",
             })}
           </div>
-        </div>
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">UV Index</div>
-            <div className="weatherCardSubTitle">
-              {daily[weeklyDataIndex].uvi}
-            </div>
-          </div>
-          <div className="weatherCardFooter">Fair distance</div>
         </div>
         <div className="weatherCardWrapper">
           <div>
@@ -200,10 +188,11 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
             style={{ overflowY: "scroll", overflowX: "hidden" }}
           >
             <div className="weatherCardTitle">Top Headlines </div>
-            {newsArticles.map((news) => {
+            {newsArticles.map((news, index) => {
               return (
                 <div
                   className="newsWrapper"
+                  key={`newsArticles ${index}`}
                   style={{
                     display: "flex",
                     width: "fit-content",
@@ -238,6 +227,7 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
           </div>
         )}
       </div>
+      <Footer />
     </TransparentCard>
   );
 };

@@ -1,6 +1,8 @@
-import cloudIcon from "../assets/cloud.png";
+import cloudIcon from "../assets/cloudy.png";
 import drizzleIcon from "../assets/drizzle.svg";
-import rainIcon from "../assets/rainy.png";
+import rainIcon from "../assets/rain.png";
+import sunIcon from "../assets/sun.png";
+import snowIcon from "../assets/snow.png";
 
 export const DAY_WISE_WEATHER = [
   { day: "Mon", weather: "Rainy", temp: "15" },
@@ -15,10 +17,11 @@ export const DAY_WISE_WEATHER = [
 export const WEEK_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const WEATHER_TYPE = [
-  { weatherType: "Clear", weatherIcon: cloudIcon },
+  { weatherType: "Clear", weatherIcon: sunIcon },
   { weatherType: "Clouds", weatherIcon: cloudIcon },
   { weatherType: "Rain", weatherIcon: rainIcon },
   { weatherType: "Drizzle", weatherIcon: drizzleIcon },
+  { weatherType: "Snow", weatherIcon: snowIcon },
 ];
 
 export const POLLUTION_PROMPT = [

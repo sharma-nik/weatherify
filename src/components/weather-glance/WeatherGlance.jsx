@@ -7,7 +7,8 @@ import "./WeatherGlance.css";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { IsCityBookmarked, getWeatherIcon } from "../../constants/utils";
-import { addToBookmark } from "../../constants/utils";
+import { addToBookmark, removeFromBookmark } from "../../constants/utils";
+import { Tooltip } from "@mui/material";
 
 const WeatherGlance = ({ cityName, coordinates }) => {
   const [isCityBookmarked, setIsCityBookmarked] = useState(false);
@@ -41,6 +42,7 @@ const WeatherGlance = ({ cityName, coordinates }) => {
                   ? getWeatherIcon(daily[weeklyDataIndex].weather[0].main)
                   : showersLogo
               }
+              style={{ height: "200px" }}
               alt="House logo"
             />
           </div>
@@ -74,11 +76,19 @@ const WeatherGlance = ({ cityName, coordinates }) => {
               }}
             >
               {isCityBookmarked ? (
-                <BookmarkIcon />
+                <Tooltip title="Added to favourite locations" arrow>
+                  <BookmarkIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => removeFromBookmark(cityName)}
+                  />
+                </Tooltip>
               ) : (
-                <BookmarkBorderIcon
-                  onClick={() => addToBookmark(cityName, coordinates)}
-                />
+                <Tooltip title="Add to favourite locations" arrow>
+                  <BookmarkBorderIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => addToBookmark(cityName, coordinates)}
+                  />
+                </Tooltip>
               )}
             </div>
           </div>
@@ -100,6 +110,7 @@ const WeatherGlance = ({ cityName, coordinates }) => {
                   day={day}
                   temp={data.temp.day}
                   weather={data.weather[0].main}
+                  key={`weatherTile ${index}`}
                 />
               );
             } else return;
