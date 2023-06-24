@@ -72,3 +72,20 @@ export const IsCityBookmarked = (cityName) => {
     return false;
   }
 };
+
+export const removeFromBookmark = (cityName) => {
+  if (localStorage.getItem("favouriteCities")) {
+    let cityIndex;
+    const bookmarkObjList = JSON.parse(localStorage.getItem("favouriteCities"));
+    for (const city in bookmarkObjList) {
+      if (bookmarkObjList[city].cityName === cityName) {
+        cityIndex = city;
+        break;
+      }
+    }
+    bookmarkObjList.splice(cityIndex, 1);
+    localStorage.setItem("favouriteCities", JSON.stringify(bookmarkObjList));
+  } else {
+    return;
+  }
+};
