@@ -35,6 +35,14 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
     feelsLikeTitle: "",
     feelsLikeDescription: "",
   });
+  const [humidity, setHumidity] = useState({
+    humidityLevel: "",
+    humidityDescription: "",
+  });
+  const [pressure, setPressure] = useState({
+    pressureLevel: "",
+    pressureDescription: "",
+  });
 
   useEffect(() => {
     setCenter(coordinates);
@@ -45,6 +53,52 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
       setNewsArticles(response?.data?.articles)
     );
   }, []);
+
+  useEffect(() => {
+    if (daily) {
+      switch (true) {
+        case Math.round(daily[weeklyDataIndex].uvi, 2) >= 0 &&
+          Math.round(daily[weeklyDataIndex].uvi, 2) <= 2:
+          setUVIndexLevel({
+            uvIndexLevel: "Low",
+            uvIndexDescription:
+              "No special precautions are needed, but it's still advisable to apply sunscreen for extended outdoor activities.",
+          });
+          break;
+        case Math.round(daily[weeklyDataIndex].uvi, 2) >= 3 &&
+          Math.round(daily[weeklyDataIndex].uvi, 2) <= 5:
+          setUVIndexLevel({
+            uvIndexLevel: "Moderate",
+            uvIndexDescription:
+              "It is recommended to take precautions such as wearing protective clothing, using sunscreen, and seeking shade during peak hours",
+          });
+          break;
+        case Math.round(daily[weeklyDataIndex].uvi, 2) >= 6 &&
+          Math.round(daily[weeklyDataIndex].uvi, 2) <= 7:
+          setUVIndexLevel({
+            uvIndexLevel: "High",
+            uvIndexDescription:
+              " It is crucial to protect the skin and eyes from the sun by wearing sun-protective clothing, applying sunscreen regularly, wearing sunglasses.",
+          });
+          break;
+        case Math.round(daily[weeklyDataIndex].uvi, 2) >= 8 &&
+          Math.round(daily[weeklyDataIndex].uvi, 2) <= 10:
+          setUVIndexLevel({
+            uvIndexLevel: "Very High",
+            uvIndexDescription:
+              " Extra precautions should be taken, including using a broad-spectrum sunscreen with a high SPF, wearing protective clothing, and minimizing sun exposure during peak hours.",
+          });
+          break;
+        case Math.round(daily[weeklyDataIndex].uvi, 2) >= 11:
+          setUVIndexLevel({
+            uvIndexLevel: "Extreme",
+            uvIndexDescription:
+              " Direct exposure to the sun can cause significant harm, including sunburn and an increased risk of skin cancer. It is strongly advised to stay indoors or seek shade, wear protective clothing.",
+          });
+          break;
+      }
+    }
+  }, [daily, weeklyDataIndex]);
 
   useEffect(() => {
     if (daily) {
@@ -80,40 +134,73 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   useEffect(() => {
     if (daily) {
       switch (true) {
-        case daily[weeklyDataIndex].uvi >= 0 && daily[weeklyDataIndex].uvi <= 2:
-          setUVIndexLevel({
-            uvIndexLevel: "Low",
-            uvIndexDescription:
-              "No special precautions are needed, but it's still advisable to apply sunscreen for extended outdoor activities.",
+        case daily[weeklyDataIndex].pressure < 1000:
+          setPressure({
+            pressureLevel: "Very Low Pressure",
+            pressureDescription:
+              "The atmospheric pressure is very low. It indicates a potential for unsettled or stormy weather conditions. It's advisable to monitor weather updates and be prepared for possible atmospheric disturbances.",
           });
           break;
-        case daily[weeklyDataIndex].uvi >= 3 && daily[weeklyDataIndex].uvi <= 5:
-          setUVIndexLevel({
-            uvIndexLevel: "Moderate",
-            uvIndexDescription:
-              "It is recommended to take precautions such as wearing protective clothing, using sunscreen, and seeking shade during peak hours",
+        case daily[weeklyDataIndex].pressure >= 1000 &&
+          daily[weeklyDataIndex].pressure <= 1013:
+          setPressure({
+            pressureLevel: "Normal Pressure",
+            pressureDescription:
+              " The atmospheric pressure is within the normal range. It suggests stable weather conditions without significant atmospheric disturbances. Typical weather patterns can be expected during this range.",
           });
           break;
-        case daily[weeklyDataIndex].uvi >= 6 && daily[weeklyDataIndex].uvi <= 7:
-          setUVIndexLevel({
-            uvIndexLevel: "High",
-            uvIndexDescription:
-              " It is crucial to protect the skin and eyes from the sun by wearing sun-protective clothing, applying sunscreen regularly, wearing sunglasses.",
+        case daily[weeklyDataIndex].pressure >= 1014 &&
+          daily[weeklyDataIndex].pressure <= 1020:
+          setPressure({
+            pressureLevel: "High Pressure",
+            pressureDescription:
+              "The atmospheric pressure is relatively high. It indicates stable and clear weather conditions with a potential for calm winds. Skies are often clear, and precipitation is less likely during this range.",
           });
           break;
-        case daily[weeklyDataIndex].uvi >= 8 &&
-          daily[weeklyDataIndex].uvi <= 10:
-          setUVIndexLevel({
-            uvIndexLevel: "Very High",
-            uvIndexDescription:
-              " Extra precautions should be taken, including using a broad-spectrum sunscreen with a high SPF, wearing protective clothing, and minimizing sun exposure during peak hours.",
+        case daily[weeklyDataIndex].pressure > 1020:
+          setPressure({
+            pressureLevel: "Very High Pressure",
+            pressureDescription:
+              "The atmospheric pressure is very high, indicating a strong high-pressure system. It suggests stable and fair weather conditions with clear skies, dry air, and light winds. Typically, this range indicates calm and settled weather",
           });
           break;
-        case daily[weeklyDataIndex].uvi >= 11:
-          setUVIndexLevel({
-            uvIndexLevel: "Extreme",
-            uvIndexDescription:
-              " Direct exposure to the sun can cause significant harm, including sunburn and an increased risk of skin cancer. It is strongly advised to stay indoors or seek shade, wear protective clothing.",
+      }
+    }
+  }, [daily, weeklyDataIndex]);
+
+  useEffect(() => {
+    if (daily) {
+      switch (true) {
+        case daily[weeklyDataIndex].humidity >= 0 &&
+          daily[weeklyDataIndex].humidity <= 24:
+          setHumidity({
+            humidityLevel: "Very Low Humidity",
+            humidityDescription:
+              "The humidity is very low, indicating dry conditions. The air may feel dry, and precautions such as staying hydrated and moisturizing the skin may be necessary.",
+          });
+          break;
+        case daily[weeklyDataIndex].humidity >= 25 &&
+          daily[weeklyDataIndex].humidity <= 49:
+          setHumidity({
+            humidityLevel: "Low to Moderate Humidity",
+            humidityDescription:
+              "The humidity is relatively low to moderate. The air is not overly dry but still offers some moisture. Comfortable conditions can be expected, but it is advisable to stay hydrated.",
+          });
+          break;
+        case daily[weeklyDataIndex].humidity >= 50 &&
+          daily[weeklyDataIndex].humidity <= 74:
+          setHumidity({
+            humidityLevel: "Moderate to High Humidity",
+            humidityDescription:
+              "The humidity is moderate to high. The air may feel slightly humid or muggy. It is recommended to stay hydrated and seek shade, particularly during hot weather.",
+          });
+          break;
+        case daily[weeklyDataIndex].humidity >= 75 &&
+          daily[weeklyDataIndex].humidity <= 100:
+          setHumidity({
+            humidityLevel: "High Humidity",
+            humidityDescription:
+              " The humidity is high, indicating very moist air. It is important to stay hydrated, seek shade, and take necessary precautions to prevent discomfort or heat-related issues.",
           });
           break;
       }
@@ -204,7 +291,19 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
             </div>
             <Slider value={daily[weeklyDataIndex].humidity} disabled={true} />
           </div>
-          <div className="weatherCardFooter">Quite humid</div>
+          <div
+            style={{
+              color: "#2c013d",
+              fontSize: "14px",
+              marginBottom: "5px",
+            }}
+            className="weatherCardFooter"
+          >
+            {humidity.humidityLevel}
+          </div>
+          <div className="weatherCardFooter">
+            {humidity.humidityDescription}
+          </div>
         </div>
 
         <div className="weatherCardWrapper">
@@ -215,6 +314,7 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                marginTop: "25px",
               }}
             >
               <div
@@ -227,15 +327,20 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
                 {Math.round(daily[weeklyDataIndex].uvi, 2)}
               </div>
               <div
-                style={{ color: "#2c013d", fontSize: "14px" }}
+                style={{
+                  color: "#2c013d",
+                  fontSize: "14px",
+                  width: "50%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
                 className="weatherCardFooter"
               >
                 {UVIndexLevel.uvIndexLevel}
               </div>
             </div>
           </div>
-
-          <div className="weatherCardFooter" style={{ marginTop: "5px" }}>
+          <div className="weatherCardFooter">
             {UVIndexLevel.uvIndexDescription}
           </div>
         </div>
@@ -250,7 +355,7 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
             </div>
           </div>
           <img src={sunCurveLogo} />
-          <div className="weatherCardFooter">
+          <div className="weatherCardFooter" style={{ fontSize: "14px" }}>
             Sunset:{" "}
             {sunset.toLocaleTimeString([], {
               hour: "2-digit",
@@ -277,10 +382,18 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
           <div>
             <div className="weatherCardTitle">Pressure</div>
             <div className="weatherCardSubTitle">
-              {daily[weeklyDataIndex].pressure}
+              {`${daily[weeklyDataIndex].pressure} hPa`}
             </div>
           </div>
-          <div className="weatherCardFooter">Fair distance</div>
+          <div
+            style={{ color: "#2c013d", fontSize: "14px" }}
+            className="weatherCardFooter"
+          >
+            {`${pressure.pressureLevel} `}
+          </div>
+          <div className="weatherCardFooter">
+            {pressure.pressureDescription}
+          </div>
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -345,42 +458,49 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
         </div>
 
         {newsArticles.length && (
-          <div
-            className="newsWrapper"
-            style={{ overflowY: "scroll", overflowX: "hidden" }}
-          >
-            <div className="weatherCardTitle">Top Headlines </div>
-            {newsArticles.map((news, index) => {
-              return (
-                <div
-                  className="newsWrapper"
-                  key={`newsArticles ${index}`}
-                  style={{
-                    display: "flex",
-                    width: "fit-content",
-                    cursor: "pointer",
-                    margin: "10px",
-                  }}
-                  onClick={() => window.open(news.url, "_blank")}
-                >
-                  <div>
-                    <img
-                      className="newsImage"
-                      src={news.urlToImage ? news.urlToImage : newsLogo}
-                    />
-                  </div>
-                  <div className="newsInfo">
-                    <div className="weatherCardTitle">{news.title}</div>
-                    <div className="weatherCardFooter newsDescription">
-                      {news.description}
+          <div className="newsWrapper" style={{}}>
+            <div className="weatherCardTitle" style={{ padding: "10px 0px" }}>
+              Top Headlines{" "}
+            </div>
+            <div
+              style={{
+                overflowY: "scroll",
+                overflowX: "hidden",
+                maxHeight: "500px",
+              }}
+            >
+              {newsArticles.map((news, index) => {
+                return (
+                  <div
+                    className="newsWrapper"
+                    key={`newsArticles ${index}`}
+                    style={{
+                      display: "flex",
+                      width: "fit-content",
+                      cursor: "pointer",
+                      margin: "10px",
+                    }}
+                    onClick={() => window.open(news.url, "_blank")}
+                  >
+                    <div>
+                      <img
+                        className="newsImage"
+                        src={news.urlToImage ? news.urlToImage : newsLogo}
+                      />
                     </div>
-                    <div className="weatherCardTitle newsSource">
-                      {news.source.name}
+                    <div className="newsInfo">
+                      <div className="weatherCardTitle">{news.title}</div>
+                      <div className="weatherCardFooter newsDescription">
+                        {news.description}
+                      </div>
+                      <div className="weatherCardTitle newsSource">
+                        {news.source.name}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
