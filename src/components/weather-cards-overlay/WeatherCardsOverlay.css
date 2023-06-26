@@ -10,8 +10,8 @@
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  height: 164px;
-  width: 164px;
+  height: 190px;
+  width: 190px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -44,7 +44,7 @@
   font-family: "SF Pro Text";
   font-style: normal;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
   color: #ecbefd;
 }
 
