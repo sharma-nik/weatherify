@@ -24,6 +24,10 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   const [center, setCenter] = useState(coordinates);
   const [newsArticles, setNewsArticles] = useState([]);
   const [radarData, setRadarData] = useState([]);
+  const [windInfo, setWindInfo] = useState({
+    windTitle: "",
+    windDescription: "",
+  });
 
   useEffect(() => {
     setCenter(coordinates);
@@ -35,9 +39,57 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
     );
   }, []);
 
+  console.log(windInfo.windTitle);
+
   useEffect(() => {
-    setRadarData(getComponentConcentration(data.components).reverse());
-  }, [data]);
+    if (daily) {
+      switch (true) {
+        case daily[weeklyDataIndex].wind_speed >= 0:
+        case daily[weeklyDataIndex].wind_speed <= 15:
+          setWindInfo({
+            windTitle: "Gentle Breeze",
+            windDescription:
+              "Enjoy a pleasant breeze as you go about your day.",
+          });
+          break;
+        case daily[weeklyDataIndex].wind_speed >= 16:
+        case daily[weeklyDataIndex].wind_speed <= 39:
+          setWindInfo({
+            windTitle: "Blustery Gusts",
+            windDescription:
+              "Hold onto your hat! It's a windy day with energetic gusts.",
+          });
+          break;
+        case daily[weeklyDataIndex].wind_speed >= 40:
+        case daily[weeklyDataIndex].wind_speed <= 61:
+          setWindInfo({
+            windTitle: "Whirling Zephyrs",
+            windDescription:
+              "Brisk winds create a lively atmosphere, perfect for outdoor activities.",
+          });
+          break;
+        case daily[weeklyDataIndex].wind_speed >= 62:
+        case daily[weeklyDataIndex].wind_speed <= 88:
+          setWindInfo({
+            windTitle: "Mighty Gale",
+            windDescription:
+              "Brace yourself against powerful gusts that demand attention.",
+          });
+          break;
+        case daily[weeklyDataIndex].wind_speed >= 89:
+          setWindInfo({
+            windTitle: "Stormy Tempest",
+            windDescription:
+              "Seek shelter! Intense winds make for a dramatic and challenging ",
+          });
+          break;
+      }
+    }
+  }, [daily, weeklyDataIndex]);
+
+  // useEffect(() => {
+  //   setRadarData(getComponentConcentration(data.components).reverse());
+  // }, [data]);
 
   const sunrise = new Date(daily[weeklyDataIndex].sunrise * 1000);
   const sunset = new Date(daily[weeklyDataIndex].sunset * 1000);
@@ -78,7 +130,7 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
           <div>
             <div className="weatherCardTitle">UV Index</div>
             <div className="weatherCardSubTitle">
-              {daily[weeklyDataIndex].uvi}
+              {Math.round(daily[weeklyDataIndex].uvi, 2)}
             </div>
           </div>
           <div className="weatherCardFooter">Fair distance</div>
@@ -109,7 +161,12 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
               {daily[weeklyDataIndex].wind_speed} km/h
             </div>
           </div>
-          <div className="weatherCardFooter">Pleasant day</div>
+          <div className="weatherCardFooter" style={{ color: "#2c013d" }}>
+            {windInfo.windTitle}
+          </div>
+          <div className="weatherCardFooter" style={{ fontSize: "10px" }}>
+            {windInfo.windDescription}
+          </div>
         </div>
         <div className="weatherCardWrapper">
           <div>

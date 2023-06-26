@@ -31,8 +31,9 @@ const WeatherGlance = ({ cityName, coordinates }) => {
           style={{
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
             marginBottom: "10px",
-            minWidth: "70%",
+            minWidth: "80%",
           }}
         >
           <div className="weatherIcon">
@@ -42,17 +43,17 @@ const WeatherGlance = ({ cityName, coordinates }) => {
                   ? getWeatherIcon(daily[weeklyDataIndex].weather[0].main)
                   : showersLogo
               }
-              style={{ height: "200px" }}
+              style={{ height: "150px" }}
               alt="House logo"
             />
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ width: "90%" }}>
+            <div style={{ width: "300px" }}>
               <p className="cityName">{cityName}</p>
               <p className="temperatureMain">
                 {Math.round(daily[weeklyDataIndex].temp.day, 2)}°c
               </p>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className="miniTemp dateWrapper">
                   <div className="weatherOverview">{day}</div>
                   <div className="temperatureHighLow">{date}</div>
