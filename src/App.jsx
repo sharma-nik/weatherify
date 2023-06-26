@@ -7,7 +7,7 @@ import {
   getPollutionData,
 } from "./api/api";
 import { useMutation } from "react-query";
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 import WeatherGlance from "./components/weather-glance/WeatherGlance";
 import WeatherCardsOverlay from "./components/weather-cards-overlay/WeatherCardsOverlay";
 import WeatherLoader from "./components/weather-loader/WeatherLoader";
