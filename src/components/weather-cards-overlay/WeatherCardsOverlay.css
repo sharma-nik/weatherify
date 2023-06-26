@@ -10,8 +10,8 @@
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  height: 190px;
-  width: 190px;
+  height: 220px;
+  width: 220px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -24,10 +24,9 @@
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
-  line-height: 20px;
+  line-height: 17px;
   letter-spacing: 0.4px;
   color: #dcdbdc;
-  text-transform: uppercase;
 }
 
 .weatherCardSubTitle {
@@ -41,11 +40,10 @@
 }
 
 .weatherCardFooter {
-  font-family: "SF Pro Text";
   font-style: normal;
   font-weight: 600;
   font-size: 11px;
-  color: #ecbefd;
+  color: #f8e5ff;
 }
 
 .mapsWrapper {
@@ -58,11 +56,11 @@
 }
 
 .newsWrapper {
-  padding: 20px;
+  padding: 10px 20px 5px 20px;
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  max-height: 500px;
+  height: fit-content;
   width: 40%;
 }
 
