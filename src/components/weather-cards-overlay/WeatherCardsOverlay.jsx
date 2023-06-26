@@ -23,10 +23,17 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   const data = useContext(PollutionContext);
   const [center, setCenter] = useState(coordinates);
   const [newsArticles, setNewsArticles] = useState([]);
-  const [radarData, setRadarData] = useState([]);
+  const [UVIndexLevel, setUVIndexLevel] = useState({
+    uvIndexLevel: "",
+    uvIndexDescription: "",
+  });
   const [windInfo, setWindInfo] = useState({
     windTitle: "",
     windDescription: "",
+  });
+  const [feelsLike, setFeelsLike] = useState({
+    feelsLikeTitle: "",
+    feelsLikeDescription: "",
   });
 
   useEffect(() => {
@@ -39,37 +46,109 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
     );
   }, []);
 
-  console.log(windInfo.windTitle);
+  useEffect(() => {
+    if (daily) {
+      switch (true) {
+        case daily[weeklyDataIndex].feels_like.day ===
+          daily[weeklyDataIndex].temp.day:
+          setFeelsLike({
+            feelsLikeTitle: "Same as current temperature",
+            feelsLikeDescription:
+              "The temperature is currently the same as the current reading. No significant change in temperature is observed.",
+          });
+          break;
+        case daily[weeklyDataIndex].feels_like.day >=
+          daily[weeklyDataIndex].temp.day:
+          setFeelsLike({
+            feelsLikeTitle: "Warmer than current temperature",
+            feelsLikeDescription:
+              "The temperature is higher than the current reading. It is relatively warmer compared to the current conditions.",
+          });
+          break;
+        case daily[weeklyDataIndex].feels_like.day <=
+          daily[weeklyDataIndex].temp.day:
+          setFeelsLike({
+            feelsLikeTitle: "Same as current temperature",
+            feelsLikeDescription:
+              "The temperature is lower than the current reading. It is relatively cooler compared to the current conditions.",
+          });
+          break;
+      }
+    }
+  }, [daily, weeklyDataIndex]);
 
   useEffect(() => {
     if (daily) {
       switch (true) {
-        case daily[weeklyDataIndex].wind_speed >= 0:
-        case daily[weeklyDataIndex].wind_speed <= 15:
+        case daily[weeklyDataIndex].uvi >= 0 && daily[weeklyDataIndex].uvi <= 2:
+          setUVIndexLevel({
+            uvIndexLevel: "Low",
+            uvIndexDescription:
+              "No special precautions are needed, but it's still advisable to apply sunscreen for extended outdoor activities.",
+          });
+          break;
+        case daily[weeklyDataIndex].uvi >= 3 && daily[weeklyDataIndex].uvi <= 5:
+          setUVIndexLevel({
+            uvIndexLevel: "Moderate",
+            uvIndexDescription:
+              "It is recommended to take precautions such as wearing protective clothing, using sunscreen, and seeking shade during peak hours",
+          });
+          break;
+        case daily[weeklyDataIndex].uvi >= 6 && daily[weeklyDataIndex].uvi <= 7:
+          setUVIndexLevel({
+            uvIndexLevel: "High",
+            uvIndexDescription:
+              " It is crucial to protect the skin and eyes from the sun by wearing sun-protective clothing, applying sunscreen regularly, wearing sunglasses.",
+          });
+          break;
+        case daily[weeklyDataIndex].uvi >= 8 &&
+          daily[weeklyDataIndex].uvi <= 10:
+          setUVIndexLevel({
+            uvIndexLevel: "Very High",
+            uvIndexDescription:
+              " Extra precautions should be taken, including using a broad-spectrum sunscreen with a high SPF, wearing protective clothing, and minimizing sun exposure during peak hours.",
+          });
+          break;
+        case daily[weeklyDataIndex].uvi >= 11:
+          setUVIndexLevel({
+            uvIndexLevel: "Extreme",
+            uvIndexDescription:
+              " Direct exposure to the sun can cause significant harm, including sunburn and an increased risk of skin cancer. It is strongly advised to stay indoors or seek shade, wear protective clothing.",
+          });
+          break;
+      }
+    }
+  }, [daily, weeklyDataIndex]);
+
+  useEffect(() => {
+    if (daily) {
+      switch (true) {
+        case daily[weeklyDataIndex].wind_speed >= 0 &&
+          daily[weeklyDataIndex].wind_speed <= 15:
           setWindInfo({
             windTitle: "Gentle Breeze",
             windDescription:
               "Enjoy a pleasant breeze as you go about your day.",
           });
           break;
-        case daily[weeklyDataIndex].wind_speed >= 16:
-        case daily[weeklyDataIndex].wind_speed <= 39:
+        case daily[weeklyDataIndex].wind_speed >= 16 &&
+          daily[weeklyDataIndex].wind_speed <= 39:
           setWindInfo({
             windTitle: "Blustery Gusts",
             windDescription:
               "Hold onto your hat! It's a windy day with energetic gusts.",
           });
           break;
-        case daily[weeklyDataIndex].wind_speed >= 40:
-        case daily[weeklyDataIndex].wind_speed <= 61:
+        case daily[weeklyDataIndex].wind_speed >= 40 &&
+          daily[weeklyDataIndex].wind_speed <= 61:
           setWindInfo({
             windTitle: "Whirling Zephyrs",
             windDescription:
               "Brisk winds create a lively atmosphere, perfect for outdoor activities.",
           });
           break;
-        case daily[weeklyDataIndex].wind_speed >= 62:
-        case daily[weeklyDataIndex].wind_speed <= 88:
+        case daily[weeklyDataIndex].wind_speed >= 62 &&
+          daily[weeklyDataIndex].wind_speed <= 88:
           setWindInfo({
             windTitle: "Mighty Gale",
             windDescription:
@@ -86,10 +165,6 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
       }
     }
   }, [daily, weeklyDataIndex]);
-
-  // useEffect(() => {
-  //   setRadarData(getComponentConcentration(data.components).reverse());
-  // }, [data]);
 
   const sunrise = new Date(daily[weeklyDataIndex].sunrise * 1000);
   const sunset = new Date(daily[weeklyDataIndex].sunset * 1000);
@@ -111,8 +186,14 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
               {Math.round(daily[weeklyDataIndex].feels_like.day, 2)}°
             </div>
           </div>
+          <div
+            style={{ color: "#2c013d", fontSize: "14px", marginBottom: "5px" }}
+            className="weatherCardFooter"
+          >
+            {feelsLike.feelsLikeTitle}
+          </div>
           <div className="weatherCardFooter">
-            Similar to the actual temperature
+            {feelsLike.feelsLikeDescription}
           </div>
         </div>
         <div className="weatherCardWrapper">
@@ -129,11 +210,34 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
         <div className="weatherCardWrapper">
           <div>
             <div className="weatherCardTitle">UV Index</div>
-            <div className="weatherCardSubTitle">
-              {Math.round(daily[weeklyDataIndex].uvi, 2)}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  width: "50%",
+                  borderRight: "1px solid rgba(255, 255, 255, 0.3)",
+                }}
+                className="weatherCardSubTitle"
+              >
+                {Math.round(daily[weeklyDataIndex].uvi, 2)}
+              </div>
+              <div
+                style={{ color: "#2c013d", fontSize: "14px" }}
+                className="weatherCardFooter"
+              >
+                {UVIndexLevel.uvIndexLevel}
+              </div>
             </div>
           </div>
-          <div className="weatherCardFooter">Fair distance</div>
+
+          <div className="weatherCardFooter" style={{ marginTop: "5px" }}>
+            {UVIndexLevel.uvIndexDescription}
+          </div>
         </div>
         <div className="weatherCardWrapper">
           <div>
@@ -158,15 +262,16 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
           <div>
             <div className="weatherCardTitle">Wind</div>
             <div className="weatherCardSubTitle">
-              {daily[weeklyDataIndex].wind_speed} km/h
+              {Math.round(daily[weeklyDataIndex].wind_speed, 2)} km/h
             </div>
           </div>
-          <div className="weatherCardFooter" style={{ color: "#2c013d" }}>
+          <div
+            className="weatherCardFooter"
+            style={{ color: "#2c013d", fontSize: "14px" }}
+          >
             {windInfo.windTitle}
           </div>
-          <div className="weatherCardFooter" style={{ fontSize: "10px" }}>
-            {windInfo.windDescription}
-          </div>
+          <div className="weatherCardFooter">{windInfo.windDescription}</div>
         </div>
         <div className="weatherCardWrapper">
           <div>
@@ -265,12 +370,7 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
                     />
                   </div>
                   <div className="newsInfo">
-                    <div
-                      className="weatherCardTitle"
-                      style={{ fontSize: "11px" }}
-                    >
-                      {news.title}
-                    </div>
+                    <div className="weatherCardTitle">{news.title}</div>
                     <div className="weatherCardFooter newsDescription">
                       {news.description}
                     </div>
