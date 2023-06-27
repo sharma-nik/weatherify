@@ -39,23 +39,24 @@ export const getComponentConcentration = (data) => {
   return response;
 };
 
-export const addToBookmark = (cityName, coordinates) => {
+export const addToBookmark = (
+  cityName,
+  coordinates,
+  favouriteLocations,
+  setFavouriteLocation
+) => {
   const bookmarkObj = { cityName, coordinates };
-  if (localStorage.getItem("favouriteCities")) {
-    const bookmarkObjList = JSON.parse(localStorage.getItem("favouriteCities"));
-    for (const city of bookmarkObjList) {
+  if (favouriteLocations.length) {
+    for (const city of favouriteLocations) {
       if (city.cityName === cityName) {
         return;
       }
     }
-    bookmarkObjList.push(bookmarkObj);
-    localStorage.setItem("favouriteCities", JSON.stringify(bookmarkObjList));
-    // window.location.reload();
+    favouriteLocations.push(bookmarkObj);
+    setFavouriteLocation(favouriteLocations);
   } else {
-    const bookmarkObjList = [];
-    bookmarkObjList.push(bookmarkObj);
-    localStorage.setItem("favouriteCities", JSON.stringify(bookmarkObjList));
-    // window.location.reload();
+    favouriteLocations.push(bookmarkObj);
+    setFavouriteLocation(favouriteLocations);
   }
 };
 
@@ -73,18 +74,17 @@ export const IsCityBookmarked = (cityName) => {
   }
 };
 
-export const removeFromBookmark = (cityName) => {
-  if (localStorage.getItem("favouriteCities")) {
+export const removeFromBookmark = (cityName, favouriteLocations) => {
+  if (favouriteLocations.length) {
     let cityIndex;
-    const bookmarkObjList = JSON.parse(localStorage.getItem("favouriteCities"));
-    for (const city in bookmarkObjList) {
-      if (bookmarkObjList[city].cityName === cityName) {
+    for (const city in favouriteLocations) {
+      if (favouriteLocations[city].cityName === cityName) {
         cityIndex = city;
         break;
       }
     }
-    bookmarkObjList.splice(cityIndex, 1);
-    localStorage.setItem("favouriteCities", JSON.stringify(bookmarkObjList));
+    favouriteLocations.splice(cityIndex, 1);
+    return favouriteLocations;
   } else {
     return;
   }

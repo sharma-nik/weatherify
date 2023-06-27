@@ -48,8 +48,17 @@
   min-width: fit-content;
   padding: 20px;
   background: rgba(110, 49, 157, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
+}
+
+.favouriteCityEmp {
+  min-width: fit-content;
+  padding: 20px;
+  background: rgba(110, 49, 157, 0.2);
+}
+
+.favouriteCity:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .favouriteLocations {
@@ -58,7 +67,6 @@
   font-weight: 600;
   background: rgba(110, 49, 157, 0.4);
   font-size: 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 10px;
 }
 
