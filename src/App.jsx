@@ -4,22 +4,18 @@ import {
   getGeoCoordinates,
   getWeeklyWeatherData,
   getCityName,
-  getPollutionData,
 } from "./api/api";
 import { useMutation } from "react-query";
-import Header from "./components/header/Header";
-import WeatherGlance from "./components/weather-glance/WeatherGlance";
-import WeatherCardsOverlay from "./components/weather-cards-overlay/WeatherCardsOverlay";
-import WeatherLoader from "./components/weather-loader/WeatherLoader";
-import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header.jsx";
+import WeatherGlance from "./components/weather-glance/WeatherGlance.jsx";
+import WeatherCardsOverlay from "./components/weather-cards-overlay/WeatherCardsOverlay.jsx";
+import WeatherLoader from "./components/weather-loader/WeatherLoader.jsx";
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();
-export const PollutionContext = createContext();
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [pollutionData, setPollutionData] = useState(null);
   const [cityName, setCityName] = useState(null);
   const [countryName, setCountryName] = useState(null);
   const [weeklyDataIndex, setWeeklyDataIndex] = useState(0);
@@ -39,8 +35,6 @@ function App() {
         const weatherData = await getWeeklyWeatherData(data.lat, data.lon);
         setCoordinates([data.lat, data.lon]);
         setWeatherData(weatherData.data);
-        const pollutionData = await getPollutionData(data.lat, data.lon);
-        setPollutionData(pollutionData.data.list[0]);
       },
     }
   );
@@ -64,23 +58,18 @@ function App() {
           setWeatherData(data);
         })
         .catch(() => setIsDataFetching(false));
-
-      getPollutionData(
-        position.coords.latitude,
-        position.coords.longitude
-      ).then(({ data }) => {
-        setPollutionData(data.list[0]);
-      });
     });
   }, []);
 
   return (
     <>
-      <PollutionContext.Provider value={pollutionData}>
-        <WeeklyIndexContext.Provider
-          value={{ weeklyDataIndex, setWeeklyDataIndex }}
-        >
-          <UserContext.Provider value={weatherData}>
+      <WeeklyIndexContext.Provider
+        value={{ weeklyDataIndex, setWeeklyDataIndex }}
+      >
+        <UserContext.Provider value={weatherData}>
+          <FavouriteLocationsContext.Provider
+            value={{ favouriteLocations, setFavouriteLocation }}
+          >
             <Header getWeatherData={mutate} />
             {weatherData ? (
               <WeatherGlance cityName={cityName} coordinates={coordinates} />
@@ -95,9 +84,9 @@ function App() {
             ) : (
               ""
             )}
-          </UserContext.Provider>
-        </WeeklyIndexContext.Provider>
-      </PollutionContext.Provider>
+          </FavouriteLocationsContext.Provider>
+        </UserContext.Provider>
+      </WeeklyIndexContext.Provider>
     </>
   );
 }

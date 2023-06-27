@@ -33,6 +33,7 @@ export function getCountryNews(country) {
   return axios({
     method: "get",
     url: `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${"0fc289c076cf441d91ee4ddff8042fee"}`,
+    // url: `https://gnews.io/api/v4/top-headlines?category=general&lang=en&country=${country}&max=20&apikey='${"db595e2a4eeff9abad0d5fcf4d9f699a"}`,
   });
 }
 
