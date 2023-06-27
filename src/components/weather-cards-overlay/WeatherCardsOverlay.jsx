@@ -3,11 +3,10 @@ import TransparentCard from "../../common/transparent-card/TransparentCard";
 import sunCurveLogo from "../../assets/sun-curve.png";
 import newsLogo from "../../assets/news.jpeg";
 import { Slider } from "antd";
-import { PollutionContext, UserContext, WeeklyIndexContext } from "../../App";
+import { UserContext, WeeklyIndexContext } from "../../App";
 import { Map } from "react-map-gl";
 import { getCountryNews } from "../../api/api";
 import "./WeatherCardsOverlay.css";
-import { getComponentConcentration } from "../../constants/utils";
 import Footer from "../footer/Footer";
 
 const style = {
@@ -20,7 +19,6 @@ const style = {
 const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   const { daily } = useContext(UserContext);
   const { weeklyDataIndex } = useContext(WeeklyIndexContext);
-  const data = useContext(PollutionContext);
   const [center, setCenter] = useState(coordinates);
   const [newsArticles, setNewsArticles] = useState([]);
   const [UVIndexLevel, setUVIndexLevel] = useState({

@@ -4,7 +4,7 @@ import locationLogo from "../../assets/google-maps.png";
 import { SearchOutlined } from "@ant-design/icons";
 import { APP_COLORS } from "../../constants/colors";
 import { Input, Button } from "antd";
-import TransparentCard from "../../common/transparent-card/TransparentCard";
+import TransparentCard from "../../common/transparent-card/TransparentCard.jsx";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Popover, Tooltip } from "@mui/material";
 
