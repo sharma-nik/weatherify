@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import weatherifyLogo from "../../assets/weatherify-logo.png";
 import locationLogo from "../../assets/google-maps.png";
 import { SearchOutlined } from "@ant-design/icons";
@@ -9,21 +9,12 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Popover, Tooltip } from "@mui/material";
 
 import "./Header.css";
+import { FavouriteLocationsContext } from "../../App";
 
 const Header = ({ getWeatherData }) => {
   const [cityName, setCityName] = useState("");
   const [anchorEl, setAnchorEl] = useState(false);
-  const [favouriteCities, setFavouriteCities] = useState([]);
-
-  useEffect(() => {
-    const handleFavouriteCities = () => {
-      if (localStorage.getItem("favouriteCities")) {
-        setFavouriteCities(JSON.parse(localStorage.getItem("favouriteCities")));
-      }
-    };
-    window.addEventListener("storage", handleFavouriteCities());
-    return window.removeEventListener("storage", handleFavouriteCities());
-  }, []);
+  const { favouriteLocations = [] } = useContext(FavouriteLocationsContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -99,8 +90,8 @@ const Header = ({ getWeatherData }) => {
               sx={{ mt: "53px" }}
             >
               <div className="favouriteLocations">Your favourite locations</div>
-              {favouriteCities.length ? (
-                favouriteCities.map((city, index) => {
+              {favouriteLocations.length ? (
+                favouriteLocations.map((city, index) => {
                   return (
                     <>
                       <div
@@ -108,6 +99,7 @@ const Header = ({ getWeatherData }) => {
                         key={`favouriteCity ${index}`}
                         onClick={() => {
                           getWeatherData(city.cityName);
+                          setCityName(city.cityName);
                           handleClose();
                         }}
                       >
@@ -126,7 +118,16 @@ const Header = ({ getWeatherData }) => {
                   );
                 })
               ) : (
-                <></>
+                <div className="favouriteCityEmp">
+                  <div
+                    style={{
+                      height: "15px",
+                      color: "2c013d",
+                    }}
+                  >
+                    No locations yet to show
+                  </div>
+                </div>
               )}
             </Popover>
           </div>

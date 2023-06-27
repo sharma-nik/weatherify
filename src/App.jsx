@@ -13,6 +13,7 @@ import WeatherLoader from "./components/weather-loader/WeatherLoader.jsx";
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();
+export const FavouriteLocationsContext = createContext();
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -21,6 +22,7 @@ function App() {
   const [weeklyDataIndex, setWeeklyDataIndex] = useState(0);
   const [isDataFetching, setIsDataFetching] = useState(null);
   const [coordinates, setCoordinates] = useState([0, 0]);
+  const [favouriteLocations, setFavouriteLocation] = useState([]);
 
   const { mutate, isLoading } = useMutation(
     async (city) => {
