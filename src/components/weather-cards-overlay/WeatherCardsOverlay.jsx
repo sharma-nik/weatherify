@@ -103,24 +103,24 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   useEffect(() => {
     if (daily) {
       switch (true) {
-        case daily[weeklyDataIndex].feels_like.day ===
-          daily[weeklyDataIndex].temp.day:
+        case Math.round(daily[weeklyDataIndex].feels_like.day, 2) ===
+          Math.round(daily[weeklyDataIndex].temp.day, 2):
           setFeelsLike({
             feelsLikeTitle: "Same as current temperature",
             feelsLikeDescription:
               "The temperature is currently the same as the current reading. No significant change in temperature is observed.",
           });
           break;
-        case daily[weeklyDataIndex].feels_like.day >=
-          daily[weeklyDataIndex].temp.day:
+        case Math.round(daily[weeklyDataIndex].feels_like.day, 2) >=
+          Math.round(daily[weeklyDataIndex].temp.day, 2):
           setFeelsLike({
             feelsLikeTitle: "Warmer than current temperature",
             feelsLikeDescription:
               "The temperature is higher than the current reading. It is relatively warmer compared to the current conditions.",
           });
           break;
-        case daily[weeklyDataIndex].feels_like.day <=
-          daily[weeklyDataIndex].temp.day:
+        case Math.round(daily[weeklyDataIndex].feels_like.day, 2) <=
+          Math.round(daily[weeklyDataIndex].temp.day, 2):
           setFeelsLike({
             feelsLikeTitle: "Same as current temperature",
             feelsLikeDescription:

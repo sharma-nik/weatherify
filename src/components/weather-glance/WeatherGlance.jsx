@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import houseLogo from "../../assets/3d-house.svg";
 import showersLogo from "../../assets/rainy.png";
 import WeatherTile from "../../common/weather-tile/WeatherTile.jsx";
-import { UserContext, WeeklyIndexContext } from "../../App";
+import {
+  FavouriteLocationsContext,
+  UserContext,
+  WeeklyIndexContext,
+} from "../../App";
 import "./WeatherGlance.css";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -11,9 +15,12 @@ import { addToBookmark, removeFromBookmark } from "../../constants/utils";
 import { Tooltip } from "@mui/material";
 
 const WeatherGlance = ({ cityName, coordinates }) => {
-  const [isCityBookmarked, setIsCityBookmarked] = useState(false);
+  const [isCityBookmarked, setIsCityBookmarked] = useState(null);
   const { daily } = useContext(UserContext);
   const { weeklyDataIndex } = useContext(WeeklyIndexContext);
+  const { favouriteLocations = [], setFavouriteLocation } = useContext(
+    FavouriteLocationsContext
+  );
 
   let date = new Date(daily[weeklyDataIndex].dt * 1000);
   let day = new Date(daily[weeklyDataIndex].dt * 1000);
@@ -22,7 +29,7 @@ const WeatherGlance = ({ cityName, coordinates }) => {
 
   useEffect(() => {
     setIsCityBookmarked(IsCityBookmarked(cityName));
-  });
+  }, []);
 
   return (
     <div className="weatherInfoWrapper">
@@ -80,14 +87,26 @@ const WeatherGlance = ({ cityName, coordinates }) => {
                 <Tooltip title="Added to favourite locations" arrow>
                   <BookmarkIcon
                     style={{ cursor: "pointer" }}
-                    onClick={() => removeFromBookmark(cityName)}
+                    onClick={() => {
+                      setIsCityBookmarked(false);
+                      removeFromBookmark(cityName, favouriteLocations);
+                      setIsCityBookmarked(false);
+                    }}
                   />
                 </Tooltip>
               ) : (
                 <Tooltip title="Add to favourite locations" arrow>
                   <BookmarkBorderIcon
                     style={{ cursor: "pointer" }}
-                    onClick={() => addToBookmark(cityName, coordinates)}
+                    onClick={() => {
+                      setIsCityBookmarked(true);
+                      addToBookmark(
+                        cityName,
+                        coordinates,
+                        favouriteLocations,
+                        setFavouriteLocation
+                      );
+                    }}
                   />
                 </Tooltip>
               )}
