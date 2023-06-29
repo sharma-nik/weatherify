@@ -11,14 +11,16 @@ export function getCityWeatherData(city) {
 export function getGeoCoordinates(city) {
   return axios({
     method: "get",
-    url: `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${API_KEY}`,
+    url: `https://api.api-ninjas.com/v1/geocoding?city=${city}`,
+    headers: { "X-API-KEY": "scuS0xK9W2buLMmGp0WbIA==DdLVDCFbZ15RdtqN" },
   });
 }
 
 export function getCityName(lat, lon) {
   return axios({
     method: "get",
-    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${API_KEY}`,
+    url: `https://api.api-ninjas.com/v1/reversegeocoding?lat=${lat}&lon=${lon}`,
+    headers: { "X-API-KEY": "scuS0xK9W2buLMmGp0WbIA==DdLVDCFbZ15RdtqN" },
   });
 }
 
@@ -33,12 +35,5 @@ export function getCountryNews(country) {
   return axios({
     method: "get",
     url: `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${"0fc289c076cf441d91ee4ddff8042fee"}`,
-  });
-}
-
-export function getPollutionData(lat, lon) {
-  return axios({
-    method: "get",
-    url: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
   });
 }
