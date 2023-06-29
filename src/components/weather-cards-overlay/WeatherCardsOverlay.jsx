@@ -16,7 +16,7 @@ const style = {
   lineHeight: "24px",
 };
 
-const WeatherCardsOverlay = ({ coordinates, countryName }) => {
+const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
   const { daily } = useContext(UserContext);
   const { weeklyDataIndex } = useContext(WeeklyIndexContext);
   const [center, setCenter] = useState(coordinates);
@@ -45,12 +45,11 @@ const WeatherCardsOverlay = ({ coordinates, countryName }) => {
   useEffect(() => {
     setCenter(coordinates);
   }, [coordinates]);
-
   useEffect(() => {
     getCountryNews(countryName.toLowerCase()).then((response) =>
       setNewsArticles(response?.data?.articles)
     );
-  }, []);
+  }, [countryName]);
 
   useEffect(() => {
     if (daily) {

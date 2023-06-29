@@ -34,8 +34,11 @@ function App() {
     },
     {
       onSuccess: async (data) => {
-        const weatherData = await getWeeklyWeatherData(data.lat, data.lon);
-        setCoordinates([data.lat, data.lon]);
+        const weatherData = await getWeeklyWeatherData(
+          data.latitude,
+          data.longitude
+        );
+        setCoordinates([data.latitude, data.longitude]);
         setWeatherData(weatherData.data);
       },
     }
@@ -50,8 +53,8 @@ function App() {
       setIsDataFetching(true);
       getCityName(position.coords.latitude, position.coords.longitude).then(
         ({ data }) => {
-          setCityName(data[0].name);
-          setCountryName(data[0].country);
+          setCityName(data[0]?.name);
+          setCountryName(data[0]?.country);
         }
       );
       getWeeklyWeatherData(position.coords.latitude, position.coords.longitude)
@@ -73,12 +76,12 @@ function App() {
             value={{ favouriteLocations, setFavouriteLocation }}
           >
             <Header getWeatherData={mutate} />
-            {weatherData ? (
+            {weatherData && cityName ? (
               <WeatherGlance cityName={cityName} coordinates={coordinates} />
             ) : (
               <WeatherLoader isLoading={isDataFetching} />
             )}
-            {weatherData ? (
+            {weatherData && countryName ? (
               <WeatherCardsOverlay
                 countryName={countryName}
                 coordinates={coordinates}
