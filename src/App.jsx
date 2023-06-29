@@ -53,7 +53,6 @@ function App() {
       setIsDataFetching(true);
       getCityName(position.coords.latitude, position.coords.longitude).then(
         ({ data }) => {
-          console.log(data);
           setCityName(data[0]?.name);
           setCountryName(data[0]?.country);
         }

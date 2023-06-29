@@ -45,7 +45,6 @@ const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
   useEffect(() => {
     setCenter(coordinates);
   }, [coordinates]);
-  console.log(countryName);
   useEffect(() => {
     getCountryNews(countryName.toLowerCase()).then((response) =>
       setNewsArticles(response?.data?.articles)
