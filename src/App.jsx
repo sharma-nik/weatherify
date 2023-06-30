@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import {
   getGeoCoordinates,
@@ -6,10 +6,16 @@ import {
   getCityName,
 } from "./api/api";
 import { useMutation } from "react-query";
-import Header from "./components/header/Header.jsx";
-import WeatherGlance from "./components/weather-glance/WeatherGlance.jsx";
-import WeatherCardsOverlay from "./components/weather-cards-overlay/WeatherCardsOverlay.jsx";
-import WeatherLoader from "./components/weather-loader/WeatherLoader.jsx";
+const Header = React.lazy(() => import("./components/header/Header.jsx"));
+const WeatherGlance = React.lazy(() =>
+  import("./components/weather-glance/WeatherGlance.jsx")
+);
+const WeatherCardsOverlay = React.lazy(() =>
+  import("./components/weather-cards-overlay/WeatherCardsOverlay.jsx")
+);
+const WeatherLoader = React.lazy(() =>
+  import("./components/weather-loader/WeatherLoader.jsx")
+);
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();
