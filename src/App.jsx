@@ -17,7 +17,7 @@ const WeatherLoader = React.lazy(() =>
   import("./components/weather-loader/WeatherLoader.jsx")
 );
 
-import Header from "./components/header/Header.jsx";
+// import Header from "./components/header/Header.jsx";
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();
@@ -83,7 +83,7 @@ function App() {
           <FavouriteLocationsContext.Provider
             value={{ favouriteLocations, setFavouriteLocation }}
           >
-            <Header getWeatherData={mutate} />
+            {/* <Header getWeatherData={mutate} /> */}
             {weatherData && cityName ? (
               <WeatherGlance cityName={cityName} coordinates={coordinates} />
             ) : (
