@@ -1,0 +1,1 @@
+import{a4 as n,a5 as r,X as t}from"./index-c7073170.js";var m=function(){function a(s,e){r(this,a),t(this,"name",void 0),t(this,"style",void 0),t(this,"_keyframe",!0),this.name=s,this.style=e}return n(a,[{key:"getName",value:function(){var e=arguments.length>0&&arguments[0]!==void 0?arguments[0]:"";return e?"".concat(e,"-").concat(this.name):this.name}}]),a}();export{m as K};
