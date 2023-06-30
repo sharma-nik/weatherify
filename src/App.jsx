@@ -6,7 +6,7 @@ import {
   getCityName,
 } from "./api/api";
 import { useMutation } from "react-query";
-const Header = React.lazy(() => import("./components/header/Header.jsx"));
+// const Header = React.lazy(() => import("./components/header/Header.jsx"));
 const WeatherGlance = React.lazy(() =>
   import("./components/weather-glance/WeatherGlance.jsx")
 );
@@ -16,6 +16,8 @@ const WeatherCardsOverlay = React.lazy(() =>
 const WeatherLoader = React.lazy(() =>
   import("./components/weather-loader/WeatherLoader.jsx")
 );
+
+import Header from "./components/header/Header.jsx";
 
 export const UserContext = createContext();
 export const WeeklyIndexContext = createContext();

@@ -7,7 +7,6 @@ import { Input, Button } from "antd";
 import TransparentCard from "../../common/transparent-card/TransparentCard.jsx";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Popover, Tooltip } from "@mui/material";
-
 import "./Header.css";
 import { FavouriteLocationsContext } from "../../App";
 
