@@ -482,7 +482,7 @@ const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
                     <div>
                       <img
                         className="newsImage"
-                        src={news.urlToImage ? news.urlToImage : newsLogo}
+                        src={news.image ? news.image : newsLogo}
                       />
                     </div>
                     <div className="newsInfo">
