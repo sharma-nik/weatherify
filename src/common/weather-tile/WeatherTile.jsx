@@ -23,7 +23,7 @@ const WeatherTile = ({ day, temp, weather, index }) => {
     >
       <p className="miniTemp">{day}</p>
       <img
-        style={{ height: "38px" }}
+        className="tileLogo"
         src={getWeatherIcon(weather)}
         alt="House logo"
       />

@@ -6,6 +6,12 @@
   margin: 10px auto 30px auto;
 }
 
+.weatherOverviewCardsWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
 .weatherCardWrapper {
   background: rgba(110, 49, 157, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -99,4 +105,72 @@
   color: #f0bff8;
   font-size: 10px;
   margin-top: 20px;
+}
+
+.mapsNewsWrapper {
+  display: flex;
+  justify-content: space-around;
+}
+.newsWrapperContainer {
+  cursor: pointer;
+  margin: 10px;
+  width: 100%;
+}
+
+.newsWrap {
+  padding: 10px 20px 5px 20px;
+  background: rgba(110, 49, 157, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  height: fit-content;
+  width: 40%;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+  .weatherOverviewCardsWrapper {
+    overflow-y: scroll;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+@media only screen and (max-width: 830px) {
+  .weatherCardSubTitle {
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .weatherCardFooter {
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  .newsWrapperContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .newsWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .mapsNewsWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .weatherOverviewCardsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .newsWrapper {
+    width: 100%;
+  }
+  .mapsWrapper {
+    margin-bottom: 10px;
+  }
 }

@@ -1,10 +1,13 @@
 .weatherInfoWrapper {
-  background-repeat: no-repeat;
-  background-size: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 100px 50px 20px 50px;
+  width: 100vw;
+}
+
+.weatherInfoLogo {
+  height: 150px;
 }
 
 .cityName {
@@ -70,7 +73,7 @@
 }
 
 .houseLogo {
-  height: 450px;
+  height: auto;
 }
 
 .dateWrapper {
@@ -90,4 +93,53 @@
   flex-direction: column;
   justify-content: center;
   width: 50%;
+}
+
+.cityWrapper {
+  width: 300px;
+}
+
+@media only screen and (max-width: 1400px) {
+  .weatherInfoWrapper {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .weatherTileWrapper {
+    height: 65px;
+    width: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.25),
+      inset 1px 1px 0px rgba(255, 255, 255, 0.25);
+  }
+  .tileLogo {
+    height: 15px;
+  }
+  .miniTemp {
+    font-size: 10px;
+  }
+  .weatherInfoLogo {
+    height: 80px;
+  }
+  .temperatureMain {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .cityName {
+    font-size: 30px;
+    line-height: 35px;
+  }
+  .cityWrapper {
+    width: 150px;
+  }
+  .weatherOverview {
+    font-size: 15px;
+    line-height: 14px;
+  }
+  .temperatureHighLow {
+    font-size: 9px;
+    line-height: 14px;
+  }
+  .weatherStatsWrapper {
+    margin-top: 20px;
+  }
 }

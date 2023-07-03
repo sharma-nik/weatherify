@@ -19,24 +19,19 @@
   margin: 0px 40px;
 }
 
-@media only screen and (max-width: 830px) {
+@media only screen and (max-width: 600px) {
   .weatherLoaderWrapper {
     display: flex;
     flex-direction: column-reverse;
   }
   .loading {
     margin-top: 80px;
-    width: 100vw;
   }
   .loadingHeader {
-    font-size: 30px;
+    font-size: 5vw;
   }
   .loadingWrapper {
-    font-size: 20px;
-  }
-  .houseLogo {
-    height: 250px;
-    margin-top: 40px;
+    font-size: 3vw;
   }
 }
 

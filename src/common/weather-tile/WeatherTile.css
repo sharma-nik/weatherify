@@ -21,6 +21,10 @@
   cursor: pointer;
 }
 
+.tileLogo {
+  height: 38px;
+}
+
 .miniTemp {
   font-family: "SF Pro Text";
   font-style: normal;

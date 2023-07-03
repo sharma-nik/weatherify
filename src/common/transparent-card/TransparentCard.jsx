@@ -12,7 +12,8 @@ const TransparentCard = (props) => {
             ? " 30px 30px 0px 0px"
             : "10px",
         position: props.type === "header" ? "fixed" : "",
-        width: props.type === "header" ? "100vw" : "",
+        width:
+          props.type === "header" || props.type === "overlay" ? "100vw" : "",
       }}
       className="cardWrapper"
     >

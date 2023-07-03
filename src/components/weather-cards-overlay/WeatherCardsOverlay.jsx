@@ -41,6 +41,21 @@ const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
     pressureLevel: "",
     pressureDescription: "",
   });
+  const [width, setWidth] = useState();
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setWidth]);
 
   useEffect(() => {
     setCenter(coordinates);
@@ -50,6 +65,8 @@ const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
       setNewsArticles(response?.data?.articles)
     );
   }, [countryName]);
+
+  console.log(newsArticles);
 
   useEffect(() => {
     if (daily) {
@@ -254,255 +271,224 @@ const WeatherCardsOverlay = ({ coordinates = [], countryName = "" }) => {
   const sunset = new Date(daily[weeklyDataIndex].sunset * 1000);
 
   return (
-    <TransparentCard type="overlay">
-      <div className="overlayNotch"></div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "40px",
-        }}
-      >
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">Feels Like</div>
-            <div className="weatherCardSubTitle">
-              {Math.round(daily[weeklyDataIndex].feels_like.day, 2)}°
+    <div style={{ width: "100vw !important" }}>
+      <TransparentCard type="overlay">
+        <div className="overlayNotch"></div>
+        <div className="weatherOverviewCardsWrapper">
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">Feels Like</div>
+              <div className="weatherCardSubTitle">
+                {Math.round(daily[weeklyDataIndex].feels_like.day, 2)}°
+              </div>
             </div>
-          </div>
-          <div
-            style={{ color: "#2c013d", fontSize: "14px", marginBottom: "5px" }}
-            className="weatherCardFooter"
-          >
-            {feelsLike.feelsLikeTitle}
-          </div>
-          <div className="weatherCardFooter">
-            {feelsLike.feelsLikeDescription}
-          </div>
-        </div>
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">Humidity</div>
-            <div className="weatherCardSubTitle">
-              {daily[weeklyDataIndex].humidity}%
-            </div>
-            <Slider value={daily[weeklyDataIndex].humidity} disabled={true} />
-          </div>
-          <div
-            style={{
-              color: "#2c013d",
-              fontSize: "14px",
-              marginBottom: "5px",
-            }}
-            className="weatherCardFooter"
-          >
-            {humidity.humidityLevel}
-          </div>
-          <div className="weatherCardFooter">
-            {humidity.humidityDescription}
-          </div>
-        </div>
-
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">UV Index</div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginTop: "25px",
+                color: "#2c013d",
+                fontSize: "14px",
+                marginBottom: "5px",
               }}
+              className="weatherCardFooter"
             >
-              <div
-                style={{
-                  width: "50%",
-                  borderRight: "1px solid rgba(255, 255, 255, 0.3)",
-                }}
-                className="weatherCardSubTitle"
-              >
-                {Math.round(daily[weeklyDataIndex].uvi, 2)}
-              </div>
-              <div
-                style={{
-                  color: "#2c013d",
-                  fontSize: "14px",
-                  width: "50%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-                className="weatherCardFooter"
-              >
-                {UVIndexLevel.uvIndexLevel}
-              </div>
+              {feelsLike.feelsLikeTitle}
+            </div>
+            <div className="weatherCardDescription weatherCardFooter">
+              {feelsLike.feelsLikeDescription}
             </div>
           </div>
-          <div className="weatherCardFooter">
-            {UVIndexLevel.uvIndexDescription}
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">Humidity</div>
+              <div className="weatherCardSubTitle">
+                {daily[weeklyDataIndex].humidity}%
+              </div>
+              <Slider value={daily[weeklyDataIndex].humidity} disabled={true} />
+            </div>
+            <div
+              style={{
+                color: "#2c013d",
+                fontSize: "14px",
+                marginBottom: "5px",
+              }}
+              className="weatherCardFooter"
+            >
+              {humidity.humidityLevel}
+            </div>
+            <div className="weatherCardDescription weatherCardFooter">
+              {humidity.humidityDescription}
+            </div>
           </div>
-        </div>
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">Sunrise</div>
-            <div className="weatherCardSubTitle">
-              {sunrise.toLocaleTimeString([], {
+
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">UV Index</div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: "25px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "50%",
+                    borderRight: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
+                  className="weatherCardSubTitle"
+                >
+                  {Math.round(daily[weeklyDataIndex].uvi, 2)}
+                </div>
+                <div
+                  style={{
+                    color: "#2c013d",
+                    fontSize: "14px",
+                    width: "50%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                  className="weatherCardFooter"
+                >
+                  {UVIndexLevel.uvIndexLevel}
+                </div>
+              </div>
+            </div>
+            <div className=" weatherCardDescription weatherCardFooter">
+              {UVIndexLevel.uvIndexDescription}
+            </div>
+          </div>
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">Sunrise</div>
+              <div className="weatherCardSubTitle">
+                {sunrise.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            </div>
+            <img src={sunCurveLogo} />
+            <div className="weatherCardFooter" style={{ fontSize: "14px" }}>
+              Sunset:{" "}
+              {sunset.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </div>
           </div>
-          <img src={sunCurveLogo} />
-          <div className="weatherCardFooter" style={{ fontSize: "14px" }}>
-            Sunset:{" "}
-            {sunset.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </div>
-        </div>
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">Wind</div>
-            <div className="weatherCardSubTitle">
-              {Math.round(daily[weeklyDataIndex].wind_speed, 2)} km/h
-            </div>
-          </div>
-          <div
-            className="weatherCardFooter"
-            style={{ color: "#2c013d", fontSize: "14px" }}
-          >
-            {windInfo.windTitle}
-          </div>
-          <div className="weatherCardFooter">{windInfo.windDescription}</div>
-        </div>
-        <div className="weatherCardWrapper">
-          <div>
-            <div className="weatherCardTitle">Pressure</div>
-            <div className="weatherCardSubTitle">
-              {`${daily[weeklyDataIndex].pressure} hPa`}
-            </div>
-          </div>
-          <div
-            style={{ color: "#2c013d", fontSize: "14px" }}
-            className="weatherCardFooter"
-          >
-            {`${pressure.pressureLevel} `}
-          </div>
-          <div className="weatherCardFooter">
-            {pressure.pressureDescription}
-          </div>
-        </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {/* <div className="airQualityWrapper">
-            <div className="weatherCardTitle">Air quality Index</div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                marginTop: "20px",
-              }}
-            >
-              <div className="weatherCardFooter">{data.main.aqi}</div>
-              <div className="weatherCardFooter">
-                {getWeatherText(data.main.aqi)}
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">Wind</div>
+              <div className="weatherCardSubTitle">
+                {Math.round(daily[weeklyDataIndex].wind_speed, 2)} km/h
               </div>
             </div>
-            <ResponsiveContainer width="90%" height="90%">
-              <RadialBarChart
-                cx="50%"
-                cy="50%"
-                innerRadius="10%"
-                outerRadius="80%"
-                barSize={8}
-                style={{ color: "#fff" }}
-                data={radarData}
-              >
-                <RadialBar
-                  maxAngle={360}
-                  background
-                  clockWise
-                  dataKey="concentration"
-                />
-                <Legend
-                  iconSize={10}
-                  layout="vertical"
-                  verticalAlign="middle"
-                  wrapperStyle={style}
-                />
-              </RadialBarChart>
-            </ResponsiveContainer>
-          </div> */}
-          <div className=" mapsWrapper">
-            <div className="weatherCardTitle">Your Location</div>
-            <Map
-              initialViewState={{
-                longitude: center[1],
-                latitude: center[0],
-                zoom: 14,
-              }}
-              style={{
-                width: 600,
-                height: 400,
-                borderRadius: "10px",
-                margin: "10px",
-              }}
-              mapStyle="mapbox://styles/mapbox/streets-v9"
-              mapboxAccessToken="pk.eyJ1Ijoic2hhcm1hLW5pYyIsImEiOiJjbGoyZ3dlZjkxZzVsM2xxaHhrdjljdTZxIn0.S75QLhqpzt5UPHlitbR5TA"
-            />
+            <div
+              className="weatherCardFooter"
+              style={{ color: "#2c013d", fontSize: "14px" }}
+            >
+              {windInfo.windTitle}
+            </div>
+            <div className="weatherCardFooter weatherCardDescription">
+              {windInfo.windDescription}
+            </div>
           </div>
-        </div>
-
-        {newsArticles.length && (
-          <div className="newsWrapper" style={{}}>
-            <div className="weatherCardTitle" style={{ padding: "10px 0px" }}>
-              Top Headlines{" "}
+          <div className="weatherCardWrapper">
+            <div>
+              <div className="weatherCardTitle">Pressure</div>
+              <div className="weatherCardSubTitle">
+                {`${daily[weeklyDataIndex].pressure} hPa`}
+              </div>
             </div>
             <div
-              style={{
-                overflowY: "scroll",
-                overflowX: "hidden",
-                maxHeight: "500px",
-              }}
+              style={{ color: "#2c013d", fontSize: "14px" }}
+              className="weatherCardFooter"
             >
-              {newsArticles.map((news, index) => {
-                return (
-                  <div
-                    className="newsWrapper"
-                    key={`newsArticles ${index}`}
-                    style={{
-                      display: "flex",
-                      width: "fit-content",
-                      cursor: "pointer",
-                      margin: "10px",
-                    }}
-                    onClick={() => window.open(news.url, "_blank")}
-                  >
-                    <div>
-                      <img
-                        className="newsImage"
-                        src={news.image ? news.image : newsLogo}
-                      />
-                    </div>
-                    <div className="newsInfo">
-                      <div className="weatherCardTitle">{news.title}</div>
-                      <div className="weatherCardFooter newsDescription">
-                        {news.description}
-                      </div>
-                      <div className="weatherCardTitle newsSource">
-                        {news.source.name}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {`${pressure.pressureLevel} `}
+            </div>
+            <div className="weatherCardFooter weatherCardDescription">
+              {pressure.pressureDescription}
             </div>
           </div>
-        )}
-      </div>
-      <Footer />
-    </TransparentCard>
+        </div>
+        <div className="mapsNewsWrapper">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div className=" mapsWrapper">
+              <div className="weatherCardTitle">Your Location</div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Map
+                  initialViewState={{
+                    longitude: center[1],
+                    latitude: center[0],
+                    zoom: 14,
+                  }}
+                  className="map"
+                  style={{
+                    width: width > "800" ? 600 : width > "500" ? 400 : 300,
+                    height: width > "500" ? 400 : 200,
+                    borderRadius: "10px",
+                    margin: "10px",
+                  }}
+                  mapStyle="mapbox://styles/mapbox/streets-v9"
+                  mapboxAccessToken="pk.eyJ1Ijoic2hhcm1hLW5pYyIsImEiOiJjbGoyZ3dlZjkxZzVsM2xxaHhrdjljdTZxIn0.S75QLhqpzt5UPHlitbR5TA"
+                />
+              </div>
+            </div>
+          </div>
+
+          {newsArticles.length ? (
+            <div className="newsWrapper">
+              <div className="weatherCardTitle" style={{ padding: "10px 0px" }}>
+                Top Headlines{" "}
+              </div>
+              <div
+                className="newsWrapperContainer"
+                style={{
+                  overflowY: "scroll",
+                  overflowX: "hidden",
+                  maxHeight: "500px",
+                }}
+              >
+                {newsArticles.map((news, index) => {
+                  return (
+                    <div
+                      className=" newsWrap"
+                      key={`newsArticles ${index}`}
+                      style={{
+                        display: "flex",
+                        cursor: "pointer",
+                        margin: "10px",
+                        width: "95%",
+                      }}
+                      onClick={() => window.open(news.url, "_blank")}
+                    >
+                      <div>
+                        <img
+                          className="newsImage"
+                          src={news.image ? news.image : newsLogo}
+                        />
+                      </div>
+                      <div className="newsInfo">
+                        <div className="weatherCardTitle">{news.title}</div>
+                        <div className="weatherCardFooter newsDescription">
+                          {news.description}
+                        </div>
+                        <div className="weatherCardTitle newsSource">
+                          {news.source.name}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <Footer />
+      </TransparentCard>
+    </div>
   );
 };
 
