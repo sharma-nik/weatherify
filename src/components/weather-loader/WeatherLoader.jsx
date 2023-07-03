@@ -5,17 +5,10 @@ import { Spin } from "antd";
 
 const WeatherLoader = ({ isLoading }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="weatherLoaderWrapper">
       <div className="loading">
-        <div style={{ width: "500px" }}>
-          <span className="loadingHeader">Your Weather Wizard: </span>
+        <div style={{ width: "80%", textAlign: "center" }}>
+          <div className="loadingHeader">Your Weather Wizard: </div>
           <div className="loadingWrapper">
             Unveiling Nature's Secrets - Rain, Clouds or Shine.
           </div>

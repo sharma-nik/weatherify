@@ -12,7 +12,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { IsCityBookmarked, getWeatherIcon } from "../../constants/utils";
 import { addToBookmark, removeFromBookmark } from "../../constants/utils";
-import { Tooltip } from "@mui/material";
+import { Tooltip, Grid } from "@mui/material";
 
 const WeatherGlance = ({ cityName, coordinates }) => {
   const [isCityBookmarked, setIsCityBookmarked] = useState(null);
@@ -50,12 +50,12 @@ const WeatherGlance = ({ cityName, coordinates }) => {
                   ? getWeatherIcon(daily[weeklyDataIndex].weather[0].main)
                   : showersLogo
               }
-              style={{ height: "150px" }}
+              className="weatherInfoLogo"
               alt="House logo"
             />
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ width: "300px" }}>
+            <div className="cityWrapper">
               <p className="cityName">{cityName}</p>
               <p className="temperatureMain">
                 {Math.round(daily[weeklyDataIndex].temp.day, 2)}°c
@@ -137,8 +137,9 @@ const WeatherGlance = ({ cityName, coordinates }) => {
           })}
         </div>
       </div>
-
-      <img className="houseLogo" src={houseLogo} alt="House logo" />
+      <div>
+        <img className="houseLogo" src={houseLogo} alt="House logo" />
+      </div>
     </div>
   );
 };

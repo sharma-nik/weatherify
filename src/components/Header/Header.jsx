@@ -35,7 +35,7 @@ const Header = ({ getWeatherData }) => {
 
   return (
     <TransparentCard type="header">
-      <div className="cardWrapperPositioning">
+      <div className="headerWrapper cardWrapperPositioning">
         <img src={weatherifyLogo} className="headerLogo" alt="Vite logo" />
         <div style={{ display: "flex" }}>
           <div className="headerSearchWrapper">
